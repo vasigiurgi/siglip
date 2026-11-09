@@ -56,10 +56,13 @@ class Config(BaseModel):
 
         Raises:
             FileNotFoundError: If the configuration file is missing.
-            ValueError: If the YAML document is not a mapping.
+            ValueError: If the YAML is invalid or not a mapping.
         """
-        with config_path.open(encoding="utf-8") as config_file:
-            raw_config = yaml.safe_load(config_file)
+        try:
+            with config_path.open(encoding="utf-8") as config_file:
+                raw_config = yaml.safe_load(config_file)
+        except yaml.YAMLError as error:
+            raise ValueError(f"Invalid YAML configuration: {config_path}") from error
         if not isinstance(raw_config, dict):
             raise ValueError(f"Configuration must be a YAML mapping: {config_path}")
         return cls.model_validate(raw_config)

@@ -1,14 +1,11 @@
 """Training loop and checkpoint utilities."""
 
-import logging
 from pathlib import Path
 
 import torch.optim as optim
 
 from siglip.config import Config, TrainConfig
 from siglip.model import ImageClassifier
-
-logger = logging.getLogger(__name__)
 
 
 def train(config: Config) -> int:
@@ -20,8 +17,7 @@ def train(config: Config) -> int:
     Returns:
         Process exit code.
     """
-    logger.info("Image classifier training is not implemented yet")
-    raise NotImplementedError
+    raise NotImplementedError("Image classifier training is not implemented yet")
 
 
 def get_optimizer(model: ImageClassifier, config: TrainConfig) -> optim.Optimizer:
