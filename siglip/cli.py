@@ -62,22 +62,21 @@ def main() -> int:
         # Execute command
         if args.command == "train":
             return train(config)
-        else:
-            logger.warning(f"Command '{args.command}' not yet implemented")
-            return 1
-
-    except FileNotFoundError as e:
-        logger.error(f"File not found: {e}")
+        logger.warning("Command '%s' is not implemented yet", args.command)
         return 1
-    except ValueError as e:
-        logger.error(f"Configuration error: {e}")
+
+    except FileNotFoundError as error:
+        logger.error("File not found: %s", error)
+        return 1
+    except ValueError as error:
+        logger.error("Configuration error: %s", error)
+        return 1
+    except NotImplementedError as error:
+        logger.warning("%s", error)
         return 1
     except KeyboardInterrupt:
         logger.info("Interrupted by user")
         return 130
-    except Exception as e:
-        logger.exception(f"Unexpected error: {e}")
-        return 1
 
 
 if __name__ == "__main__":
